@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengelolaan Pelanggan - Admin Panel</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/admin/css/style.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-shopping-cart"></i>
+          <h2>Admin Shop</h2>
+        </div>
+        <nav class="nav-menu">
+          <div class="nav-item">
+            <a href="/admin/dashboard" class="nav-link">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/produk" class="nav-link">
+              <i class="fas fa-box"></i>
+              Pengelolaan Produk
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pesanan" class="nav-link">
+              <i class="fas fa-shopping-bag"></i>
+              Pengelolaan Pesanan
+            </a>
+          </div>
+          <div class="nav-item active">
+            <a href="/admin/pelanggan" class="nav-link">
+              <i class="fas fa-users"></i>
+              Pengelolaan Pelanggan
+              <span class="badge"><%= pelanggan.length %></span>
+              <!-- Jumlah pelanggan -->
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pembayaran" class="nav-link">
+              <i class="fas fa-credit-card"></i>
+              Pengelolaan Pembayaran
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-header">
+          <h1>Pengelolaan Pelanggan</h1>
+          <div class="header-actions">
+            <input
+              type="text"
+              placeholder="Cari Pelanggan"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <!-- Grid Pelanggan -->
+        <!-- Grid Pelanggan -->
+        <div class="pelanggan-grid">
+          <% pelanggan.forEach((item) => { %>
+          <div class="pelanggan-card">
+            <div class="pelanggan-avatar">
+              <img src="<%= item.avatar %>" alt="Pelanggan" />
+            </div>
+            <div class="pelanggan-details">
+              <h3><%= item.nama %></h3>
+              <p>Email: <%= item.email %></p>
+              <div class="pelanggan-stats">
+                <span>Total Pesanan: <%= item.total_pesanan %></span>
+                <span>Total Belanja: Rp <%= item.total_belanja %></span>
+              </div>
+              <!-- Button Actions -->
+              <div class="pelanggan-actions">
+                <button
+                  class="btn-accept"
+                  onclick="handleAction('<%= item.id_pelanggan %>', 'terima')"
+                >
+                  <i class="fas fa-check-circle"></i> Terima
+                </button>
+                <button
+                  class="btn-decline"
+                  onclick="handleAction('<%= item.id_pelanggan %>', 'tolak')"
+                >
+                  <i class="fas fa-times-circle"></i> Tolak
+                </button>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

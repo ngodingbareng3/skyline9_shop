@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengelolaan Pembayaran - Admin Panel</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/admin/css/style.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-shopping-cart"></i>
+          <h2>Admin Shop</h2>
+        </div>
+        <nav class="nav-menu">
+          <div class="nav-item">
+            <a href="/admin/dashboard" class="nav-link">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/produk" class="nav-link">
+              <i class="fas fa-box"></i>
+              Pengelolaan Produk
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pesanan" class="nav-link">
+              <i class="fas fa-shopping-bag"></i>
+              Pengelolaan Pesanan
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pelanggan" class="nav-link">
+              <i class="fas fa-users"></i>
+              Pengelolaan Pelanggan
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pembayaran" class="nav-link active">
+              <i class="fas fa-credit-card"></i>
+              Pengelolaan Pembayaran
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-header">
+          <h1>Pengelolaan Pembayaran</h1>
+          <button class="btn-primary">
+            <i class="fas fa-plus"></i> Tambah Metode Pembayaran
+          </button>
+        </div>
+
+        <!-- Tabel Pembayaran -->
+        <div class="table-container">
+          <div class="table-header">
+            <h2>Daftar Pembayaran</h2>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Metode Pembayaran</th>
+                <th>Status</th>
+                <th>Jumlah Pembayaran</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% pembayaran.forEach((item) => { %>
+              <tr>
+                <td>
+                  <i
+                    class="fab fa-<%= item.metode_pembayaran.toLowerCase() %>"
+                  ></i>
+                  <%= item.metode_pembayaran %>
+                </td>
+                <td>
+                  <span
+                    class="status-badge status-<%= item.status.toLowerCase() %>"
+                    ><%= item.status %></span
+                  >
+                </td>
+                <td>Rp <%= item.jumlah_pembayaran %></td>
+                <td><%= item.tanggal %></td>
+                <td>
+                  <button class="btn-secondary">
+                    <i class="fas fa-eye"></i> Detail
+                  </button>
+                  <button class="btn-danger">
+                    <i class="fas fa-trash"></i> Hapus
+                  </button>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Ringkasan Pembayaran -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <h3>Total Transaksi</h3>
+            <div class="card-value">Rp 100.000,00</div>
+          </div>
+          <div class="card">
+            <h3>Pembayaran Bulan Ini</h3>
+            <div class="card-value">Rp 100.000,00</div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

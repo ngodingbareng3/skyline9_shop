@@ -1,0 +1,39 @@
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'user') DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Pendaftaran Table
+CREATE TABLE pendaftaran (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    nama_lengkap VARCHAR(100),
+    tempat_lahir VARCHAR(50),
+    tanggal_lahir DATE,
+    alamat TEXT,
+    no_telp VARCHAR(15),
+    asal_sekolah VARCHAR(100),
+    program_studi VARCHAR(50),
+    status ENUM('pending', 'verified', 'rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Dokumen Table
+CREATE TABLE dokumen (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    pendaftaran_id INT,
+    jenis_dokumen VARCHAR(50),
+    file_path VARCHAR(255),
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (pendaftaran_id) REFERENCES pendaftaran(id)
+);
+
+
+cara menjalankan :
+1. masuk ke directory projek
+2. ketikkan "npx nodemon src/app.js" di terminal

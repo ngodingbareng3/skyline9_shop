@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Bisnis E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-shopping-cart"></i>
+          <h2>Admin Shop</h2>
+        </div>
+        <nav class="nav-menu">
+          <div class="nav-item">
+            <a href="/admin/dashboard" class="nav-link active">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/produk" class="nav-link">
+              <i class="fas fa-box"></i>
+              Pengelolaan Produk
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pesanan" class="nav-link">
+              <i class="fas fa-shopping-bag"></i>
+              Pengelolaan Pesanan
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pelanggan" class="nav-link">
+              <i class="fas fa-users"></i>
+              Pengelolaan Pelanggan
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pembayaran" class="nav-link">
+              <i class="fas fa-credit-card"></i>
+              Pengelolaan Pembayaran
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-header">
+          <h1>Dashboard</h1>
+          <div class="user-profile">
+            <span>Admin</span>
+            <img src="../admin/aset/admin.jpeg" alt="Admin Profile" />
+            <a href="/auth/Logout" class="btn-secondary">Logout</a>
+          </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-box"></i>
+              </div>
+            </div>
+            <div class="card-title">Total Produk</div>
+            <div class="card-value"><%= totalProduk %></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-shopping-bag"></i>
+              </div>
+            </div>
+            <div class="card-title">Total Pesanan</div>
+            <div class="card-value"><%= totalPesanan %></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+            <div class="card-title">Total Pelanggan</div>
+            <div class="card-value"><%= totalPelanggan %></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+              </div>
+            </div>
+            <div class="card-title">Pendapatan Bulan Ini</div>
+            <div class="card-value">Rp <%= totalPendapatan %></div>
+          </div>
+        </div>
+
+        <!-- Recent Orders Table -->
+        <div class="table-container">
+          <div class="table-header">
+            <h2>Pesanan Terbaru</h2>
+            <button class="action-btn btn-primary"><i class="fas fa-download"></i> Export</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>No. Pesanan</th>
+                <th>Nama Pelanggan</th>
+                <th>Total Harga</th>
+                <th>Tanggal</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (recentOrders && recentOrders.length > 0) { %> <% recentOrders.forEach((order) => { %>
+              <tr>
+                <td><%= order.id_pemesanan %></td>
+                <td><%= order.nama_pelanggan %></td>
+                <td>Rp <%= order.total_harga.toLocaleString('id-ID') %></td>
+                <td><%= new Date(order.tanggal_pemesanan).toLocaleDateString('id-ID') %></td>
+                <td>
+                  <span class="status-badge status-<%= order.status.toLowerCase() %>"> <%= order.status %> </span>
+                </td>
+                <td>
+                  <button class="action-btn btn-secondary">Detail</button>
+                </td>
+              </tr>
+              <% }) %> <% } else { %>
+              <tr>
+                <td colspan="6">Tidak ada pesanan terbaru.</td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

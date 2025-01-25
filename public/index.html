@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UMKM</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav-container">
+        <a href="#" class="logo">
+          <i class="fa-solid fa-shop"></i>
+          SKYLINE 9
+        </a>
+        <div class="nav-menu">
+          <a href="#Beranda" class="nav-link">Beranda</a>
+          <a href="#Program Studi" class="nav-link">Menu</a>
+          <a href="#biaya" class="nav-link">Produk</a>
+          <a href="#kontak" class="nav-link">Kontak</a>
+          <a href="/auth/login" class="nav-link">Login</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="Beranda" class="hero">
+      <div class="hero-content">
+        <h1>UMKM</h1>
+        <p>Dengan harga terbaik dan rasa yang sangan menyenangkan hanya di</p>
+        <p>SKYLINE 9</p>
+        <button class="cta-button">Beli Sekarang</button>
+      </div>
+    </section>
+
+    <!-- Modal Form Pembelian -->
+    <div id="modalPendaftaran" class="modal">
+      <div class="modal-content">
+        <span class="close" aria-label="Close">&times;</span>
+        <h2><i class="fa-solid fa-shop"></i> Form Pemesanan</h2>
+        <p>Isi form di bawah ini untuk Melakukan Pemesanan</p>
+        <form
+          action="/pembelian/submit"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <!-- Nama Pelanggan -->
+          <div class="form-group">
+            <label for="nama_pelanggan">Nama Lengkap <span>*</span></label>
+            <input
+              type="text"
+              id="nama_pelanggan"
+              name="nama_pelanggan"
+              placeholder="Masukkan nama lengkap Anda"
+              required
+            />
+          </div>
+
+          <!-- Alamat Pengiriman -->
+          <div class="form-group">
+            <label for="alamat">Alamat Pengiriman <span>*</span></label>
+            <input
+              type="text"
+              id="alamat"
+              name="alamat"
+              placeholder="Contoh: Jl. Sunggal No. 123"
+              required
+            />
+          </div>
+
+          <!-- Produk -->
+          <div class="form-group">
+            <label for="id_product">Produk <span>*</span></label>
+            <select id="id_product" name="id_product" required>
+              <option value="">Pilih Produk</option>
+              <option value="1">Bubur candil - Rp 15.000</option>
+              <option value="1">Bubur Sumsum Pandan - Rp 15.000</option>
+              <option value="1">Bubur Biji Delima - Rp 20.000</option>
+              <option value="1">Bubur Buji Salak - Rp 20.000</option>
+              <option value="1">Bubur Ketela - Rp25.000</option>
+              <option value="2">Keripik Pisang Coklat - Rp 25.000</option>
+              <option value="2">Rempeyek pisang Jagung - Rp 30.000</option>
+              <option value="2">Rengginang - Rp 15.000</option>
+              <option value="2">Keripik Bawang Balado - Rp 25.000</option>
+              <option value="2">Basreng Balado Daun Jeruk - Rp 20.000</option>
+              <option value="3">Dodol Wak Pe'ah - Rp 15.000</option>
+              <option value="3">Kue Bugis - Rp 15.000</option>
+              <option value="3">Ongol Ongol Durian - Rp 25.000</option>
+              <option value="3">Getuk Gulung - Rp 20.000</option>
+              <option value="3">Serabi Durian - Rp 25.000</option>
+
+              <!-- Produk lainnya dapat dimuat secara dinamis -->
+            </select>
+          </div>
+
+          <!-- Tanggal Pengantaran -->
+          <div class="form-group">
+            <label for="tanggal_pengantaran"
+              >Tanggal Pengantaran <span>*</span></label
+            >
+            <input
+              type="date"
+              id="tanggal_pengantaran"
+              name="tanggal_pengantaran"
+              min="${new Date().toISOString().split('T')[0]}"
+              <!--
+              Hari
+              ini
+              sebagai
+              batas
+              minimum
+              --
+            />
+            required />
+          </div>
+
+          <!-- Total Harga -->
+          <div class="form-group">
+            <label for="total_harga">Quantity <span>*</span></label>
+            <input
+              type="number"
+              id="total_harga"
+              name="total_harga"
+              placeholder="Quantity"
+              min="0"
+              required
+            />
+          </div>
+
+          <!-- Status Pemesanan (Hidden) -->
+          <input type="hidden" name="status" value="pending" />
+
+          <!-- Tombol Submit -->
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-paper-plane"></i> Pesan Sekarang
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Program Studi Section -->
+    <section id="Program Studi" class="section">
+      <div class="section-title">
+        <h2>Menu</h2>
+        <h3>Pilihan Best Seller</h3>
+      </div>
+      <div class="prodi-container">
+        <div class="fakultas-card">
+          <div class="fakultas-header">
+            <h3>Aneka Keripik</h3>
+          </div>
+          <div class="prodi-list">
+            <ul>
+              <li>Keripik Pisang Coklat</li>
+              <li>Keripik Bawang Balado</li>
+              <li>Basreng Balado Daun jeruk</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fakultas-card">
+          <div class="fakultas-header">
+            <h3>Bubur</h3>
+          </div>
+          <div class="prodi-list">
+            <ul>
+              <li>Bubur Sumsum Pandan</li>
+              <li>Bubur Biji Delima</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fakultas-card">
+          <div class="fakultas-header">
+            <h3>Kue Basah</h3>
+          </div>
+          <div class="prodi-list">
+            <ul>
+              <li>Dodol Wak Pe'ah</li>
+              <li>Ongol Ongol Durian</li>
+              <li>Serabi Durian</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biaya Section -->
+    <section
+      id="biaya"
+      class="section"
+      style="background-color: var(--bg-light)"
+    >
+      <div class="section-title">
+        <h2>Produk</h2>
+        <p>Dengan Harga yang Murah yang Rasanya Asiiaaapppp</p>
+      </div>
+      <table class="biaya-table">
+        <thead>
+          <tr>
+            <th>Bubur</th>
+            <th>Harga</th>
+            <th>Gambar Produk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bubur Candil</td>
+            <td>Rp 15.000</td>
+            <td>
+              <img
+                src="aset/Bubur/candil.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Bubur Sumsum Pandan</td>
+            <td>Rp 15.000</td>
+            <td>
+              <img
+                src="aset/Bubur/download.jpeg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Bubur Biji Delima</td>
+            <td>Rp 20.000</td>
+            <td>
+              <img
+                src="aset/Bubur/biji delima.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Bubur Buji Salak</td>
+            <td>Rp 20.000</td>
+            <td>
+              <img
+                src="aset/Bubur/bijisalak.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Bubur Ketela</td>
+            <td>Rp 25.000</td>
+            <td>
+              <img
+                src="aset/Bubur/bubur ketela.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th>Keripik</th>
+            <th>Harga</th>
+            <th>Gambar Produk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Keripik Pisang Coklat</td>
+            <td>Rp 25.000</td>
+            <td>
+              <img
+                src="aset/Keripik/piscok.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Rempeyek pisang Jagung</td>
+            <td>Rp 30.000</td>
+            <td>
+              <img
+                src="aset/Keripik/rempeyek.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Rengginang</td>
+            <td>Rp 15.000</td>
+            <td>
+              <img
+                src="aset/Keripik/rengginang.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Keripik Bawang Balado</td>
+            <td>Rp 25.000</td>
+            <td>
+              <img
+                src="aset/Keripik/bawang balado.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Basreng Balado Daun jeruk</td>
+            <td>Rp 20.000</td>
+            <td>
+              <img
+                src="aset/Keripik/basreng.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th>Kue Basah</th>
+            <th>Harga</th>
+            <th>Gambar Produk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dodol Wak Pe'ah</td>
+            <td>Rp 15.000</td>
+            <td>
+              <img
+                src="aset/Kue Basah/dodol.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Kue Bugis</td>
+            <td>Rp 15.000</td>
+            <td>
+              <img
+                src="aset/Kue Basah/bugis.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Ongol Ongol Durian</td>
+            <td>Rp 25.000</td>
+            <td>
+              <img
+                src="aset/Kue Basah/ongol ongol.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Getuk Gulung</td>
+            <td>Rp 20.000</td>
+            <td>
+              <img
+                src="aset/Kue Basah/getuk.jpg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Serabi Durian</td>
+            <td>Rp 25.000</td>
+            <td>
+              <img
+                src="aset/Bubur/serabu.jpeg"
+                alt="Deskripsi Gambar"
+                width="175"
+                height="110"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Kontak Section -->
+    <section id="kontak" class="section">
+      <div class="section-title">
+        <h2>Hubungi Kami</h2>
+        <p>Dapatkan informasi lebih lanjut tentang Produk Skyline9</p>
+      </div>
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Informasi Kontak</h3>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h4>Alamat</h4>
+              <p>Jalan Medan Sunggal no.993</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h4>Telepon</h4>
+              <p>+628 1356 8729</p>
+              <p>WhatsApp: 0812-3456-7890</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <h4>Email</h4>
+              <p>skyline9@gmail.com</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h3>Kirim Pesan</h3>
+          <form>
+            <div class="form-group">
+              <label for="nama">Nama Lengkap</label>
+              <input type="text" id="nama" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" required />
+            </div>
+            <div class="form-group">
+              <label for="telepon">No. Telepon</label>
+              <input type="tel" id="telepon" required />
+            </div>
+            <div class="form-group">
+              <label for="pesan">Pesan</label>
+              <textarea id="pesan" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Kirim Pesan</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Cards Section -->
+    <!-- <section class="info-section">
+      <div class="info-container">
+        <div class="info-card">
+          <i class="fas fa-calendar"></i>
+          <h3>Jadwal Pendaftaran</h3>
+          <p>Gelombang 1: 1 Jan - 31 Mar 2025</p>
+          <p>Gelombang 2: 1 Apr - 30 Jun 2025</p>
+        </div>
+        <div class="info-card">
+          <i class="fas fa-book-open"></i>
+          <h3>Program Studi</h3>
+          <p>30+ Program Studi Terakreditasi</p>
+          <p>Fakultas Unggulan</p>
+        </div>
+        <div class="info-card">
+          <i class="fas fa-users"></i>
+          <h3>Fasilitas</h3>
+          <p>Beasiswa Prestasi</p>
+          <p>Asrama Mahasiswa</p>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h4>Kontak Kami</h4>
+          <ul class="footer-links">
+            <li>Email: skyline9@gmail.com</li>
+            <li>Telp: +628 1356 8729</li>
+            <li>WhatsApp: 0812-3456-7890</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Alamat</h4>
+          <p>
+            Jalan Medan <br />
+            Medan Sunggal, 993<br />
+            Indonesia
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>Social Media</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Ambil elemen-elemen
+      const modal = document.getElementById("modalPendaftaran");
+      const btnDaftar = document.querySelector(".cta-button"); // Tombol "Daftar Sekarang"
+      const closeModal = document.querySelector(".close");
+
+      // Ketika tombol "Daftar Sekarang" ditekan
+      btnDaftar.onclick = () => {
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden"; // Nonaktifkan scroll pada body
+      };
+
+      // Ketika tombol close (x) ditekan
+      closeModal.onclick = () => {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto"; // Aktifkan scroll kembali
+      };
+
+      // Ketika klik di luar modal, modal akan ditutup
+      window.onclick = (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+      };
+    </script>
+  </body>
+</html>

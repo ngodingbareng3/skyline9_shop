@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengelolaan Produk - Admin Panel</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/admin/css/style.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-shopping-cart"></i>
+          <h2>Admin Shop</h2>
+        </div>
+        <nav class="nav-menu">
+          <div class="nav-item">
+            <a href="/admin/dashboard" class="nav-link">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/produk" class="nav-link active">
+              <i class="fas fa-box"></i>
+              Pengelolaan Produk
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pesanan" class="nav-link">
+              <i class="fas fa-shopping-bag"></i>
+              Pengelolaan Pesanan
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pelanggan" class="nav-link">
+              <i class="fas fa-users"></i>
+              Pengelolaan Pelanggan
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="/admin/pembayaran" class="nav-link">
+              <i class="fas fa-credit-card"></i>
+              Pengelolaan Pembayaran
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-header">
+          <h1>Pengelolaan Produk</h1>
+          <button id="btnTambahProduk" class="btn-primary">
+            <i class="fas fa-plus"></i> Tambah Produk
+          </button>
+        </div>
+
+        <!-- Filter Produk -->
+        <div class="produk-filters">
+          <div class="filter-group">
+            <select class="form-control">
+              <option>Semua Kategori</option>
+              <option>Bubur</option>
+              <option>Keripik</option>
+              <option>Kue Basah</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Cari Produk"
+              class="form-control"
+              style="margin-top: 1rem"
+            />
+          </div>
+        </div>
+
+        <!-- Grid Produk -->
+        <div class="produk-grid">
+          <% produk.forEach((item) => { %>
+          <div class="produk-card">
+            <img src="<%= item.gambar %>" alt="Produk" />
+            <div class="produk-details">
+              <h3><%= item.nama %></h3>
+              <p>Kategori: <%= item.kategori %></p>
+              <p>Harga: Rp <%= item.harga %></p>
+              <p>Stok: <%= item.stok %></p>
+              <div class="produk-actions">
+                <form
+                  action="/admin/produk/hapus/<%= item.id_produk %>"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit" class="btn-delete">
+                    <i class="fas fa-trash"></i> Hapus
+                  </button>
+                </form>
+                <button class="btn-edit" data-id="<%= item.id_produk %>">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </main>
+
+      <!-- Modal Tambah Produk -->
+      <div id="modalTambahProduk" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Tambah Produk</h2>
+          <form
+            action="/admin/produk/tambah"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="form-group">
+              <label for="nama_produk">Nama Produk</label>
+              <input type="text" id="nama_produk" name="nama_produk" required />
+            </div>
+            <div class="form-group">
+              <label for="kategori">Kategori</label>
+              <input type="text" id="kategori" name="kategori" required />
+            </div>
+            <div class="form-group">
+              <label for="harga">Harga</label>
+              <input type="number" id="harga" name="harga" required />
+            </div>
+            <div class="form-group">
+              <label for="stok">Stok</label>
+              <input type="number" id="stok" name="stok" required />
+            </div>
+            <div class="form-group">
+              <label for="gambar">Gambar Produk</label>
+              <input
+                type="file"
+                id="gambar"
+                name="gambar"
+                accept="image/*"
+                required
+              />
+            </div>
+            <button type="submit" class="btn-primary">Simpan</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal Edit Produk -->
+      <div id="modalEditProduk" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Edit Produk</h2>
+          <form
+            id="editForm"
+            action="/admin/produk/edit"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" id="edit_id_produk" name="id_produk" />
+            <div class="form-group">
+              <label for="edit_nama_produk">Nama Produk</label>
+              <input
+                type="text"
+                id="edit_nama_produk"
+                name="nama_produk"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="edit_kategori">Kategori</label>
+              <input type="text" id="edit_kategori" name="kategori" required />
+            </div>
+            <div class="form-group">
+              <label for="edit_harga">Harga</label>
+              <input type="number" id="edit_harga" name="harga" required />
+            </div>
+            <div class="form-group">
+              <label for="edit_stok">Stok</label>
+              <input type="number" id="edit_stok" name="stok" required />
+            </div>
+            <div class="form-group">
+              <label for="edit_gambar">Gambar Produk</label>
+              <input
+                type="file"
+                id="edit_gambar"
+                name="gambar"
+                accept="image/*"
+              />
+            </div>
+            <button type="submit" class="btn-primary">Simpan Perubahan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+      // Modal Tambah Produk
+      const modalTambah = document.getElementById("modalTambahProduk");
+      const btnTambah = document.getElementById("btnTambahProduk");
+      const closeTambah = modalTambah.querySelector(".close-btn");
+
+      btnTambah.addEventListener("click", () => {
+        modalTambah.style.display = "flex";
+      });
+
+      closeTambah.addEventListener("click", () => {
+        modalTambah.style.display = "none";
+      });
+
+      // Modal Edit Produk
+      const modalEdit = document.getElementById("modalEditProduk");
+      const closeEdit = modalEdit.querySelector(".close-btn");
+
+      document.querySelectorAll(".btn-edit").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const produkCard = btn.closest(".produk-card");
+          const nama = produkCard.querySelector("h3").textContent;
+          const kategori = produkCard
+            .querySelector("p:nth-of-type(1)")
+            .textContent.replace("Kategori: ", "");
+          const harga = produkCard
+            .querySelector("p:nth-of-type(2)")
+            .textContent.replace("Harga: Rp ", "")
+            .replace(".", "");
+          const stok = produkCard
+            .querySelector("p:nth-of-type(3)")
+            .textContent.replace("Stok: ", "");
+
+          document.getElementById("edit_id_produk").value = id;
+          document.getElementById("edit_nama_produk").value = nama;
+          document.getElementById("edit_kategori").value = kategori;
+          document.getElementById("edit_harga").value = harga;
+          document.getElementById("edit_stok").value = stok;
+
+          modalEdit.style.display = "flex";
+        });
+      });
+
+      closeEdit.addEventListener("click", () => {
+        modalEdit.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modalTambah) {
+          modalTambah.style.display = "none";
+        } else if (e.target === modalEdit) {
+          modalEdit.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
